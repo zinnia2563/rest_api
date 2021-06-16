@@ -24,7 +24,29 @@ const createUser = asyncHandler(async(req,res) => {
     
 })
 
+const logUser = asyncHandler(async(req,res) =>{
+ try {
+    const email = req.body.email;
+    const data = await User.findOne({email});
+     if(data&& (data.password===req.body.password)){
+         res.json({
+             message:"successfully login"
+         })
+     }
+     else{
+         res.json({
+             message: "invalid Email or password"
+         })
+     }
+ } catch (error) {
+     res.json({
+         message: error
+     })
+ }
+   
+})
 module.exports = {
     createUser,
-    getallUser
+    getallUser,
+    logUser
 }
